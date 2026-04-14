@@ -1,0 +1,60 @@
+name: py312_s1grits
+channels:
+  - conda-forge
+
+dependencies:
+  # --- Core Python & NumPy Version Control ---
+  - python=3.12
+  - pip
+
+  # Geospatial / array stack
+  - geopandas
+
+  # --- ASF & Network ---
+  - asf_search
+  - requests
+  - urllib3
+  - tqdm
+  - fsspec
+
+  # --- Data Structures ---
+  - rasterio
+  - xarray
+  - zarr
+  - h5py
+  - pydantic
+  - pandera
+  - pyyaml
+  - python-dateutil
+  - rich
+  - tenacity
+
+  # --- Analysis & Visualization ---
+  - scikit-image
+  - opencv
+  - pillow
+  - seaborn
+  - rioxarray
+  - leafmap
+  - streamlit
+  - streamlit-folium
+
+  # Utils
+  - psutil
+
+  - pyarrow
+  - jupyter
+  - notebook 
+  - ipykernel
+  - jupyterlab
+  - jupyter_server
+  - ipywidgets
+  - widgetsnbextension
+  - jupyterlab_widgets
+  - cartopy
+
+  # --- Dependency version constraints for leafmap compatibility ---
+  # werkzeug>=3.0 removed url_quote, but older flask/localtileserver need it
+  - werkzeug<3.0
+  - flask>=2.0,<3.0
+  - localtileserver>=0.5.0

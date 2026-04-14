@@ -1,0 +1,50 @@
+# CONSTANTS FOR REFERENCE
+MAX_BURSTS_IN_MGRS_TILE = 450
+MAX_MGRS_TILES_INTERSECTING_BURST = 8
+
+
+# Tiles that are in DIST-HLS but not in DIST-S1
+# due to coverage
+BLACKLISTED_MGRS_TILE_IDS = [
+    '02RQN',
+    '02RRN',
+    '05LNJ',
+    '15DWD',
+    '15DXD',
+    '17NQE',
+    '17PPR',
+    '23EMN',
+    '23EMP',
+    '23ENN',
+    '24KTU',
+    '30NWK',
+    '36JZT',
+    '37GCH',
+    '37GCJ',
+    '37GDH',
+    '37GDJ',
+    '37KES',
+    '47NRJ',
+    '49NHJ',
+    '49PEK',
+    '49PFK',
+    '49PGK',
+    '49PGL',
+    '49PHK',
+    '49PHL',
+    '50KPF',
+    '50KQF',
+    '50MNB',
+    '50PKQ',
+    '50PKR',
+    '50PLQ',
+    '50PLR',
+    '50PRQ',
+    '52MCU',
+    '52MCV',
+    '53QPC',
+    '54RXR',
+    '55KEB',
+    '55KFA',
+    '57XVF',
+]

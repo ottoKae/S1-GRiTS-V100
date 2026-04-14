@@ -1,0 +1,113 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "cython>=3.0", "numpy>=1.26"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "s1grits"
+version = "1.0.0"
+description = "S1-GRiTS: Sentinel-1 Gridded Radiometrically Terrain-Corrected gamma0 Monthly Composite Time Series"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [
+    {name = "KaeRao", email = "kkkkae@whu.edu.cn"},
+]
+maintainers = [
+    {name = "KaeRao", email = "kkkkae@whu.edu.cn"},
+]
+keywords = [
+    "sentinel-1",
+    "sar",
+    "remote-sensing",
+    "time-series",
+    "geospatial",
+    "mgrs",
+    "asf",
+    "rtc",
+    "zarr",
+    "cog",
+    "monthly-composite",
+    "gamma0",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+]
+
+dependencies = [
+    # Core scientific computing
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
+    "pandas>=2.0.0",
+
+    # Geospatial data processing
+    "xarray>=2023.1.0",
+    "zarr>=2.17.0,<3.0.0",
+    "rasterio>=1.3.10",
+    "rioxarray>=0.15.0",
+    "geopandas>=0.14.0",
+    "pyproj>=3.6.0",
+    "shapely>=2.0.0",
+
+    # ASF data access
+    "asf-search>=7.0.0",
+    "requests>=2.31.0",
+
+    # Data and configuration
+    "pydantic>=2.0.0",
+    "pyarrow>=14.0.0",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.9.0",
+
+    # Progress and logging
+    "rich>=13.0.0",
+    "tqdm>=4.66.0",
+
+    # Image processing (despeckle + preview)
+    "scikit-image>=0.22.0",
+    "pillow>=10.0.0",
+
+    # System utilities
+    "psutil>=5.9.0",
+
+    # Security: safe XML parsing
+    "defusedxml>=0.7.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+notebook = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.0.0",
+    "matplotlib>=3.7.0",
+    "ipywidgets>=8.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ottoKae/S1-GRiTS-V100"
+Documentation = "https://github.com/ottoKae/S1-GRiTS-V100/blob/main/README.md"
+Repository = "https://github.com/ottoKae/S1-GRiTS-V100"
+Issues = "https://github.com/ottoKae/S1-GRiTS-V100/issues"
+
+[project.scripts]
+s1grits = "s1grits.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"s1grits" = ["data/*.parquet", "py.typed"]
+"s1grits.analysis" = ["*.py"]
