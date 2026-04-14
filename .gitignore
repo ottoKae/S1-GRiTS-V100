@@ -1,8 +1,8 @@
 # Python bytecode
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
 *.pyo
+*$py.class
 
 # Compiled Cython extensions (platform-specific binaries)
 # Note: pre-compiled .pyd files for distribution are tracked
