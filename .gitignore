@@ -5,7 +5,7 @@ __pycache__/
 *.pyo
 
 # Compiled Cython extensions (platform-specific binaries)
-*.pyd
+# Note: pre-compiled .pyd files for distribution are tracked
 *.so
 *.dll
 
