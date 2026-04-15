@@ -104,7 +104,7 @@ a plug-and-play input for large-scale, long-term land surface change monitoring 
 5. **Standardised gamma0 radiometry** — built on OPERA RTC-S1, radiometrically and
    geometrically corrected, eliminating incidence-angle-induced intensity bias;
 
-6. **Dual speckle suppression** — temporal trimmed-mean compositing + spatial TV Bregman
+6. **Dual speckle suppression** — temporal median compositing + spatial TV Bregman
    filtering, reducing coherent speckle while preserving edge structure;
 
 7. **Standardised multi-band output** — 4 core bands per monthly time slice (extensible with
@@ -610,19 +610,16 @@ If you use S1-GRiTS in your research, please cite this repository:
 ```text
 KaeRao. S1-GRiTS: Sentinel-1 Gridded Backscatter γ⁰ Monthly Composite Time Series.
 GitHub: https://github.com/ottoKae/S1-GRiTS-V100, 2026.
+
+A companion paper is currently under review and will be released upon publication.
 ```
 
 ---
 
 ## 9. Acknowledgements
 
-**[@ottoKae](https://github.com/ottoKae)** designed and planned the entire project, conducted
-all real-world testing and validation, ensured end-user usability, and performed quality
-assurance of all deliverables.
+**[@ottoKae](https://github.com/ottoKae)** designed and planned the entire project, conducted all real-world testing and validation, ensured end-user usability, and performed quality assurance of all deliverables.
 
-The burst-to-MGRS-tile enumeration and spatial speckle filtering approaches draw heavily
-from the [dist-s1-enumerator](https://github.com/opera-adt/dist-s1-enumerator) project
-by OPERA/JPL. We gratefully acknowledge their work.
+The burst-to-MGRS-tile enumeration and spatial speckle filtering approaches draw heavily from the [dist-s1-enumerator](https://github.com/opera-adt/dist-s1-enumerator) project by OPERA/JPL. We gratefully acknowledge their work.
 
-Code optimization and the production-ready implementation were carried out with assistance
-from [@claude](https://claude.ai) (Anthropic).
+Code optimization and the production-ready implementation were carried out with assistance from [@claude](https://claude.ai) (Anthropic).
