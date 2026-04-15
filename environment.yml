@@ -37,6 +37,7 @@ dependencies:
   - psutil
   - tenacity
   - defusedxml
+  - pandera
 
   # Image processing
   - scikit-image
@@ -46,5 +47,6 @@ dependencies:
   - ipykernel
   - ipywidgets
 
-  - pip:
-    - s1grits @ .
+  # NOTE: After creating this environment, install s1grits manually:
+  #   pip install -e .   (editable mode, run from project root)
+  #   pip install .      (standard install)
