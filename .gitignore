@@ -79,7 +79,9 @@ logs/
 *.log
 *.tif
 *.zarr/
+# Exclude parquet output files, but NOT the bundled LUT data in src/
 *.parquet
+!src/s1grits/data/*.parquet
 
 # ASF credentials (never commit)
 .netrc
