@@ -608,6 +608,21 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for full 
 If you use S1-GRiTS in your research, please cite this repository:
 
 ```text
-KaeRao. S1-GRiTS: Sentinel-1 Gridded RTC-gamma0 Monthly Composite Time Series.
+KaeRao. S1-GRiTS: Sentinel-1 Gridded Backscatter γ⁰ Monthly Composite Time Series.
 GitHub: https://github.com/ottoKae/S1-GRiTS-V100, 2026.
 ```
+
+---
+
+## 9. Acknowledgements
+
+**[@ottoKae](https://github.com/ottoKae)** designed and planned the entire project, conducted
+all real-world testing and validation, ensured end-user usability, and performed quality
+assurance of all deliverables.
+
+The burst-to-MGRS-tile enumeration and spatial speckle filtering approaches draw heavily
+from the [dist-s1-enumerator](https://github.com/opera-adt/dist-s1-enumerator) project
+by OPERA/JPL. We gratefully acknowledge their work.
+
+Code optimization and the production-ready implementation were carried out with assistance
+from [@claude](https://claude.ai) (Anthropic).
