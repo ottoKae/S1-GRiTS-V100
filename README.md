@@ -73,7 +73,7 @@ s1grits process --config config/s1grits_config_base_en.yaml
 ```
 
 The pipeline automatically handles: ASF search + S3 streaming → multi-burst mosaic per MGRS
-tile → trimmed-mean monthly composite → TV Bregman despeckle → 4-band output (+ optional GLCM
+tile → median monthly composite → TV despeckle → 4-band output (+ optional GLCM
 texture bands) → COG + Zarr + Preview archival.
 
 ---
