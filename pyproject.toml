@@ -109,5 +109,5 @@ s1grits = "s1grits.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"s1grits" = ["data/*.parquet", "py.typed"]
+"s1grits" = ["data/*.parquet", "py.typed", "*.pyd", "*.so"]
 "s1grits.analysis" = ["*.py"]
