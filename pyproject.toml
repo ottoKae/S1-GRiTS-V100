@@ -120,11 +120,12 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "s1grits" = [
+    # Static data files
     "data/*.parquet",
     "py.typed",
-    "*.py",
-    "asf_array_processing.cp*-win_amd64.pyd",
-    "asf_output_writing.cp*-win_amd64.pyd",
-    "mgrs_burst_data.cp*-win_amd64.pyd",
+    # Windows compiled extensions  (cp312-cp312-win_amd64)
+    "*.pyd",
+    # Linux compiled extensions    (cpython-312-x86_64-linux-gnu)
+    "*.so",
 ]
 "s1grits.analysis" = ["*.py"]
