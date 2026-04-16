@@ -23,6 +23,8 @@ Supports two config schemas:
       months: [1, 2]
 """
 
+from __future__ import annotations
+
 import calendar
 from datetime import date as _date
 import pandas as pd

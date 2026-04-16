@@ -7,7 +7,7 @@ name = "s1grits"
 version = "1.0.0"
 description = "S1-GRiTS: Sentinel-1 Gridded Radiometrically Terrain-Corrected gamma0 Monthly Composite Time Series"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.13"
 license = "Apache-2.0"
 authors = [
     {name = "ottoKae", email = "r1536803768@gmail.com"},
@@ -49,7 +49,7 @@ dependencies = [
 
     # Geospatial data processing
     "xarray>=2023.1.0",
-    "zarr>=2.17.0,<3.0.0",
+    "zarr>=3.0.0",
     "rasterio>=1.3.10",
     "rioxarray>=0.15.0",
     "geopandas>=0.14.0",
@@ -72,6 +72,7 @@ dependencies = [
 
     # Image processing (despeckle + preview)
     "scikit-image>=0.22.0",
+    "opencv-python>=4.5.0",
     "pillow>=10.0.0",
 
     # System utilities
@@ -94,6 +95,15 @@ notebook = [
     "matplotlib>=3.7.0",
     "ipywidgets>=8.0.0",
 ]
+gui = [
+    "streamlit>=1.20.0",
+    "streamlit-folium>=0.18.0",
+    "folium>=0.16.0",
+    "plotly>=5.18.0",
+]
+all = [
+    "s1grits[dev,notebook,gui]",
+]
 
 [project.urls]
 Homepage = "https://github.com/ottoKae/S1-GRiTS-V100"
@@ -102,11 +112,19 @@ Repository = "https://github.com/ottoKae/S1-GRiTS-V100"
 Issues = "https://github.com/ottoKae/S1-GRiTS-V100/issues"
 
 [project.scripts]
-s1grits = "s1grits.cli:main"
+s1grits     = "s1grits.cli:main"
+s1grits-gui = "s1grits.gui_entry:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-"s1grits" = ["data/*.parquet", "py.typed", "*.pyd", "*.so"]
+"s1grits" = [
+    "data/*.parquet",
+    "py.typed",
+    "*.py",
+    "asf_array_processing.cp*-win_amd64.pyd",
+    "asf_output_writing.cp*-win_amd64.pyd",
+    "mgrs_burst_data.cp*-win_amd64.pyd",
+]
 "s1grits.analysis" = ["*.py"]

@@ -124,8 +124,8 @@ def cmd_process(args):
     logger.info("Starting workflow: %s", config_path)
     start_time = pd.Timestamp.now()
 
-    with console.status("[bold green]Processing...", spinner="dots"):
-        results = run_multi_mgrs_monthly_workflow(config_path)
+    console.print("[dim]Processing...[/dim]")
+    results = run_multi_mgrs_monthly_workflow(config_path)
 
     end_time = pd.Timestamp.now()
     duration = end_time - start_time

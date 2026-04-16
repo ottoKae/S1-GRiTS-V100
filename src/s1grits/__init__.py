@@ -25,7 +25,7 @@ def __getattr__(name):
         from s1grits.workflow import run_multi_mgrs_monthly_workflow
         return run_multi_mgrs_monthly_workflow
     elif name == "build_s1_monthly_cog_and_zarr_crossUTM":
-        from s1grits.asf_io import build_s1_monthly_cog_and_zarr_crossUTM
+        from s1grits.asf_output_writing import build_s1_monthly_cog_and_zarr_crossUTM
         return build_s1_monthly_cog_and_zarr_crossUTM
     elif name == "get_rtc_s1_ts_metadata_from_mgrs_tiles":
         from s1grits.asf_tiles import get_rtc_s1_ts_metadata_from_mgrs_tiles

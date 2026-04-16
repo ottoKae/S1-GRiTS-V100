@@ -1,8 +1,12 @@
 """
 Memory management module
 
-Provides system memory detection and batch strategy selection functions, automatically choosing appropriate data batch processing strategies based on available memory
+Provides system memory detection and batch strategy selection functions,
+automatically choosing appropriate data batch processing strategies based
+on available memory.
 """
+
+from __future__ import annotations
 
 import pandas as pd
 from warnings import warn

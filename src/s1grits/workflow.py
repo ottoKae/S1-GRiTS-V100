@@ -4,7 +4,7 @@ Core workflow module
 Integrates all functional modules to implement the complete workflow:
 WKT → MGRS Tiles → Monthly compositing → Zarr/COG output
 
-v2.0 - Supports parallel processing and catalog management
+v1.0.0 - Supports parallel processing and catalog management
 """
 
 import sys
@@ -37,7 +37,8 @@ console = Console(legacy_windows=True)
 # Import project modules
 from s1grits.mgrs_burst_data import get_mgrs_tiles_overlapping_geometry
 from s1grits.asf_tiles import get_rtc_s1_ts_metadata_from_mgrs_tiles
-from s1grits.asf_io import load_and_despeckle_rtc_strict, build_s1_monthly_cog_and_zarr_tileUTM
+from s1grits.asf_io import load_and_despeckle_rtc_strict
+from s1grits.asf_output_writing import build_s1_monthly_cog_and_zarr_tileUTM
 from s1grits.time_utils import parse_time_range_config
 from s1grits.memory_manager import get_memory_strategy_from_config, chunk_time_by_strategy
 from s1grits.adapters import (
@@ -548,7 +549,7 @@ def run_multi_mgrs_monthly_workflow(config_path: str | Path) -> dict[str, dict]:
             results[mgrs_tile_id] = result
 
     # 6. Merge all tile catalogs
-    from s1grits.asf_io import merge_tile_catalogs
+    from s1grits.asf_output_writing import merge_tile_catalogs
 
     _post_proc = config['processing'].get('post_processing', True)
     _proc_suffix = "_hARDCp" if _post_proc else "_ARDC"

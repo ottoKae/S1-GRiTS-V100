@@ -32,7 +32,7 @@ def extract_pixel_timeseries(
         dict containing:
             - vv_ts: VV backscatter time series (dB)
             - vh_ts: VH backscatter time series (dB)
-            - ratio_ts: VV/VH ratio (if available)
+            - ratio_ts: VH/VV ratio (if available)
             - rvi_ts: RVI index (if available)
             - dates: Time coordinates
             - valid_count: Number of valid observations
