@@ -33,8 +33,8 @@ _plat_tag = os.environ.get("WHEEL_PLAT_TAG", "")
 
 _options = {}
 if _plat_tag:
-    # bdist_wheel reads Distribution.command_options["bdist_wheel"]["plat_name"]
-    _options["bdist_wheel"] = {"plat_name": ("setup.py", _plat_tag)}
+    # bdist_wheel expects plat_name as a plain string, not a (source, value) tuple
+    _options["bdist_wheel"] = {"plat_name": _plat_tag}
     print(f"[INFO] Forcing wheel platform tag: {_plat_tag}")
 
 setup(
