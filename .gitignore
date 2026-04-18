@@ -5,9 +5,10 @@ __pycache__/
 *$py.class
 
 # Compiled Cython extensions (platform-specific binaries)
-# Note: pre-compiled .pyd files for distribution are tracked
-*.so
+# Note: pre-compiled .pyd and .so files for distribution are tracked
 *.dll
+# Allow compiled extension binaries in the package directory
+!src/s1grits/*.so
 
 # Build artifacts
 build/
