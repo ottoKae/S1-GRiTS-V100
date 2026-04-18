@@ -75,7 +75,8 @@ Thumbs.db
 desktop.ini
 
 # S1-GRiTS output data (never commit large datasets)
-output/
+output*/
+output_*/
 logs/
 *.log
 *.tif
