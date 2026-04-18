@@ -201,9 +201,12 @@ def process_single_mgrs_tile(
     logger.info("=" * 60)
     logger.info("Processing MGRS tile: %s", mgrs_tile_id)
     logger.info("=" * 60)
+    _console = Console()
+    _console.print(f"\n[bold cyan]Tile: {mgrs_tile_id}[/bold cyan]")
 
     try:
         # 1. Query metadata
+        _console.print("[dim]  [1/4] Querying ASF metadata...[/dim]")
         df_rtc_ts = query_rtc_metadata_for_tile(mgrs_tile_id, time_ranges, config)
 
         if df_rtc_ts.empty:
@@ -211,6 +214,8 @@ def process_single_mgrs_tile(
                 'status': 'failed',
                 'error': 'No data available'
             }
+
+        _console.print(f"[dim]  [1/4] Found [bold]{len(df_rtc_ts)}[/bold] scenes[/dim]")
 
         # 2. Filter by flight direction
         flight_direction = config['roi'].get('flight_direction')
@@ -226,6 +231,7 @@ def process_single_mgrs_tile(
         # 3. Select batch strategy
         n_scenes = len(df_rtc_ts)
         batch_strategy = get_memory_strategy_from_config(config, n_scenes)
+        _console.print(f"[dim]  [2/4] Batch strategy: [bold]{batch_strategy}[/bold] ({n_scenes} scenes)[/dim]")
 
         # 4. Prepare output paths (using new output_root architecture)
         output_config = config['output']
@@ -251,11 +257,17 @@ def process_single_mgrs_tile(
         # 5. Process in batches
         dates = pd.to_datetime(df_rtc_ts['acq_dt']).unique()
         date_batches = chunk_time_by_strategy(dates.tolist(), batch_strategy)
+        _console.print(f"[dim]  [3/4] Downloading & processing [bold]{len(date_batches)}[/bold] batch(es)...[/dim]")
 
         written_months = []
 
         for batch_idx, batch_dates in enumerate(date_batches, 1):
             logger.info("--- Batch %d/%d ---", batch_idx, len(date_batches))
+            _console.print(
+                f"[dim]    Batch {batch_idx}/{len(date_batches)}: "
+                f"{len(batch_dates)} scene(s), "
+                f"{min(batch_dates).strftime('%Y-%m')} ~ {max(batch_dates).strftime('%Y-%m')}[/dim]"
+            )
 
             # Filter data for current batch
             df_batch = df_rtc_ts[df_rtc_ts['acq_dt'].isin(batch_dates)].copy()
@@ -270,6 +282,7 @@ def process_single_mgrs_tile(
 
             # Download + despeckle (with batch-level retry)
             logger.info("  Downloading data...")
+            _console.print("[dim]      Downloading...[/dim]", end="\r")
             _batch_max_retries          = config['memory'].get('batch_max_retries', 2)
             _scene_max_retries          = config['memory'].get('scene_max_retries', 3)  # ignored, kept for compat
             _max_failed_ratio           = config['memory'].get('max_failed_ratio', 0.0)
@@ -305,10 +318,12 @@ def process_single_mgrs_tile(
 
             if not _batch_success or not clean_dates:
                 logger.warning("Download failed after all batch retries, skipping batch")
+                _console.print(f"[yellow]    [WARN] Batch {batch_idx} download failed, skipping[/yellow]")
                 continue
 
             # Monthly compositing + output (using new API)
             logger.info("  Monthly compositing...")
+            _console.print("[dim]      Compositing...[/dim]", end="\r")
             res = build_s1_monthly_cog_and_zarr_tileUTM(
                 arrs_vv=final_vv,
                 prof_vv=prof_vv,
@@ -343,6 +358,10 @@ def process_single_mgrs_tile(
             batch_months = res.get('written_months', [])
             written_months.extend(batch_months)
             logger.info("Months written: %s", batch_months)
+            _console.print(
+                f"[green]      Batch {batch_idx}/{len(date_batches)} done — "
+                f"wrote {len(batch_months)} month(s): {', '.join(batch_months)}[/green]"
+            )
 
             # Clean up memory
             if config['memory']['clear_cache_per_batch']:
@@ -354,6 +373,9 @@ def process_single_mgrs_tile(
         logger.info("Completed processing: %s", mgrs_tile_id)
         logger.info("Total months: %d", len(set(written_months)))
         logger.info("=" * 60)
+        _console.print(
+            f"[bold green]  [4/4] Done: {len(set(written_months))} month(s) written[/bold green]"
+        )
 
         # Apply Zarr time ordering fix if enabled
         zarr_fix_config = config['processing'].get('zarr_time_fix', {})
