@@ -23,6 +23,14 @@ science rather than data wrangling.
 
 ### Step 1 — Install
 
+#### Option A: pip install from PyPI (recommended for most users)
+
+```bash
+pip install s1grits
+```
+
+#### Option B: install from source
+
 ```bash
 # Clone the repository
 git clone https://github.com/ottoKae/S1-GRiTS-V100.git
@@ -33,13 +41,29 @@ conda install -n base conda-libmamba-solver
 conda env create -f environment.yml --solver=libmamba
 conda activate py312_s1grits_v100
 
-
 # Install the s1grits package
 pip install .
+```
 
-# Optional: Jupyter kernel for notebook tutorials
+#### Optional: Jupyter notebook support
+
+```bash
+pip install "s1grits[notebook]"
 python -m ipykernel install --user --name py312_s1grits --display-name "Python (py312_s1grits)"
 jupyter lab
+```
+
+#### Optional: Streamlit GUI
+
+```bash
+pip install "s1grits[gui]"
+s1grits-gui
+```
+
+Or install everything at once:
+
+```bash
+pip install "s1grits[all]"
 ```
 
 ### Step 2 — Configure
@@ -365,6 +389,28 @@ output:
                          # Note: Zarr is always written (cannot be disabled)
 ```
 
+> **Important — Zarr band schema is fixed at creation time**
+>
+> The Zarr data cube has a fixed `(bands, time, y, x)` shape. The **band dimension is set when
+> the Zarr store is first created and cannot be changed afterwards**:
+>
+> - Zarr created with `texture_features.enabled: false` → **4 bands** (VV\_dB, VH\_dB, Ratio, RVI)
+> - Zarr created with `texture_features.enabled: true` → **12 bands** (4 core + 8 GLCM texture)
+>
+> `overwrite: true` re-processes existing months within the existing schema — it does **not**
+> change the band count. If you want GLCM texture bands but your existing Zarr has only 4 bands,
+> you must write to a **separate output directory**:
+>
+> ```yaml
+> output:
+>   base_dir: "./output_glcm"   # new directory — do not reuse the existing output
+> processing:
+>   texture_features:
+>     enabled: true
+> ```
+>
+> There is no in-place migration path from a 4-band Zarr to a 12-band Zarr.
+
 ### 3.4 Parallel and memory configuration
 
 ```yaml
@@ -588,6 +634,13 @@ error. Set to `0.1` (allow up to 10% failure rate) for more lenient behaviour.
 A: The default configuration (`inputs: ["VV_dB", "VH_dB"]`,
 `metrics: ["contrast", "homogeneity", "entropy", "correlation"]`) adds 8 texture bands,
 bringing the total to 4 + 8 = **12 bands**.
+
+**Q: Can I add GLCM bands to an existing 4-band Zarr?**
+
+A: No. The Zarr band dimension is fixed at creation time and cannot be expanded in place.
+`overwrite: true` only re-processes months within the existing schema — it does not change
+the band count. To produce a 12-band dataset with GLCM, set a new `base_dir` and reprocess;
+the two datasets are kept in separate output directories.
 
 **Q: What SAR index conventions does S1-GRiTS use?**
 

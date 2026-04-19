@@ -90,6 +90,9 @@ logs/
 .asf_auth
 *.credential
 
+# Files
+docs/
+
 # Temporary files
 tmp/
 temp/
